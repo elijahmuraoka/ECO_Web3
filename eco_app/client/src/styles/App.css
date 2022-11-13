@@ -1,0 +1,14 @@
+/* Root variables */
+:root {
+    --clr-primary: #57cc99;
+    --clr-secondary: #22577a;
+    --font-size: 1.1em;
+}
+
+/* General */
+body {
+    color: var(--clr-primary);
+    background-color: var(--clr-secondary);
+    font-size: var(--font-size);
+    text-align: center;
+}
