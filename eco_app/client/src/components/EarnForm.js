@@ -1,44 +1,53 @@
-import React from "react";
+import { React, useState } from "react";
+import "../styles/EarnForm.css";
 
-class EarnForm extends React.Component {
-    constructor(props) {
-        super(props);
+const EarnForm = (props) => {
+    const [inputText, setInputText] = useState({
+        title: "",
+    });
 
-        this.state = {
-            code: "",
-        };
-    }
+    const codes = new Map();
+    codes.set("swag", 1);
+    codes.set("money", 69);
 
-    handleCodeChange = (e) => {
-        this.setState({
-            code: e.target.value,
+    const onChange = (e) => {
+        setInputText({
+            ...inputText,
+            [e.target.name]: e.target.value,
         });
     };
 
-    handleSubmission = (e) => {
-        if (this.state.code !== "") {
-            alert("A code was submitted: " + this.state.code);
-            console.log("Current Code:" + this.state.code);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const input = inputText.title.trim();
+        if (validateCode(input)) {
+            props.rewardUser(codes.get(input));
+            setInputText({
+                title: "",
+            });
         }
-
     };
 
-    render() {
-        return (
-            <form className="earn-form" action ='/getValidCode' method='POST'>
-                <input
-                    type="input"
-                    placeholder="Enter code here"
-                    onChange={this.handleCodeChange}
-                    value={this.state.code}
-                    required
-                ></input>
-                <button type="submit" onClick={this.handleSubmission}>
-                    Earn Tokens
-                </button>
-            </form>
-        );
-    }
-}
+    const validateCode = (s) => {
+        return codes.has(s);
+    };
+
+    return (
+        <form id="earn-form" action="/checkValidCode" method="POST">
+            <input
+                type="text"
+                id="code-input"
+                placeholder="Enter code..."
+                value={inputText.title}
+                name="title"
+                onChange={onChange}
+                required
+            ></input>
+            <button id="code-submit" type="submit" onClick={handleSubmit}>
+                Earn Tokens
+            </button>
+        </form>
+    );
+};
 
 export default EarnForm;

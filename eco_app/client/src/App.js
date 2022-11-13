@@ -41,8 +41,10 @@ class App extends React.Component {
     render() {
         return (
             <main>
+                <script defer src="./scripts.js"></script>
                 <Header />
                 <Body />
+                <div id="overlay"></div>
             </main>
         );
     }

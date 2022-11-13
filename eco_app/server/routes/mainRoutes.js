@@ -8,3 +8,5 @@ const db = DBConnection.getInstance();
 router.get("/", (req, res) => {
     res.send("Hello, this is the home page");
 });
+
+router.post('/checkValidCode')
